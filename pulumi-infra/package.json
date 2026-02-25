@@ -1,0 +1,15 @@
+{
+  "name": "chatbot-infra",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^6.0.0",
+    "@pulumi/awsx": "^2.0.0",
+    "@pulumi/eks": "^2.0.0",
+    "@pulumi/pulumi": "^3.0.0"
+  }
+}

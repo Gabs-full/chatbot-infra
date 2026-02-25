@@ -1,0 +1,53 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chatbot-ingress
+  namespace: chatbot
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - api.seudominio.com
+      secretName: chatbot-tls
+  rules:
+    - host: api.seudominio.com
+      http:
+        paths:
+          - path: /auth
+            pathType: Prefix
+            backend:
+              service:
+                name: chatbot-auth-service
+                port:
+                  number: 80
+          - path: /bots
+            pathType: Prefix
+            backend:
+              service:
+                name: chatbot-bot-service
+                port:
+                  number: 80
+          - path: /webhook
+            pathType: Prefix
+            backend:
+              service:
+                name: chatbot-webhook-service
+                port:
+                  number: 80
+          - path: /gateway
+            pathType: Prefix
+            backend:
+              service:
+                name: chatbot-lambda-gateway
+                port:
+                  number: 80
+          - path: /zapi
+            pathType: Prefix
+            backend:
+              service:
+                name: chatbot-zapi-service
+                port:
+                  number: 80

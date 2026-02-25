@@ -1,0 +1,4 @@
+config:
+  aws:region: us-east-1
+  chatbot-infra:dbPassword:
+    secure: REPLACE_WITH_PULUMI_SECRET

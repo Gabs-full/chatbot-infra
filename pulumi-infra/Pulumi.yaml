@@ -1,0 +1,9 @@
+name: chatbot-infra
+runtime:
+  name: nodejs
+  options:
+    typescript: true
+description: Chatbot microservices infrastructure on AWS
+config:
+  aws:region:
+    default: us-east-1
