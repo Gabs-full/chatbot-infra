@@ -111,8 +111,35 @@ const cluster = new eks.Cluster(`${projectName}-eks`, {
   tags: { Environment: env },
 });
 
+const nodeRole = new aws.iam.Role(`${projectName}-node-role`, {
+  assumeRolePolicy: JSON.stringify({
+    Version: "2012-10-17",
+    Statement: [{
+      Action: "sts:AssumeRole",
+      Effect: "Allow",
+      Principal: { Service: "ec2.amazonaws.com" },
+    }],
+  }),
+});
+
+new aws.iam.RolePolicyAttachment(`${projectName}-node-worker-policy`, {
+  role: nodeRole.name,
+  policyArn: "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+});
+
+new aws.iam.RolePolicyAttachment(`${projectName}-node-cni-policy`, {
+  role: nodeRole.name,
+  policyArn: "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+});
+
+new aws.iam.RolePolicyAttachment(`${projectName}-node-ecr-policy`, {
+  role: nodeRole.name,
+  policyArn: "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+});
+
 const nodeGroup = new eks.ManagedNodeGroup(`${projectName}-nodegroup`, {
   cluster: cluster,
+  nodeRole: nodeRole,
   instanceTypes: ["t3.medium"],
   scalingConfig: {
     desiredSize: 2,
