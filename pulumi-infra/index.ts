@@ -5,7 +5,7 @@ import * as eks from "@pulumi/eks";
 
 const config = new pulumi.Config();
 const projectName = "chatbot";
-const env = pulumi.getStack(); // dev, staging, prod
+const env = pulumi.getStack();
 
 // ─────────────────────────────────────────
 // VPC
@@ -39,7 +39,6 @@ for (const svc of services) {
     tags: { Environment: env },
   });
 
-  // Lifecycle policy: manter apenas as últimas 10 imagens
   new aws.ecr.LifecyclePolicy(`${svc}-lifecycle`, {
     repository: ecrRepos[svc].name,
     policy: JSON.stringify({
@@ -67,7 +66,7 @@ const dbSecurityGroup = new aws.ec2.SecurityGroup(`${projectName}-db-sg`, {
     protocol: "tcp",
     fromPort: 5432,
     toPort: 5432,
-    cidrBlocks: ["10.0.0.0/16"], // apenas dentro da VPC
+    cidrBlocks: ["10.0.0.0/16"],
   }],
   egress: [{
     protocol: "-1",
@@ -106,13 +105,20 @@ const cluster = new eks.Cluster(`${projectName}-eks`, {
   vpcId: vpc.vpcId,
   privateSubnetIds: vpc.privateSubnetIds,
   publicSubnetIds: vpc.publicSubnetIds,
-  instanceType: "t3.medium",
-  desiredCapacity: 2,
-  minSize: 1,
-  maxSize: 5,
-  nodeAmiId: "ami-0966771c48f9ce327",
   nodeAssociatePublicIpAddress: false,
   enabledClusterLogTypes: ["api", "audit", "authenticator"],
+  skipDefaultNodeGroup: true,
+  tags: { Environment: env },
+});
+
+const nodeGroup = new eks.ManagedNodeGroup(`${projectName}-nodegroup`, {
+  cluster: cluster,
+  instanceTypes: ["t3.medium"],
+  scalingConfig: {
+    desiredSize: 2,
+    minSize: 1,
+    maxSize: 5,
+  },
   tags: { Environment: env },
 });
 
