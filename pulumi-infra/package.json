@@ -1,7 +1,7 @@
 {
   "name": "chatbot-infra",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "bin/index.js",
   "devDependencies": {
     "@types/node": "^18.0.0",
     "typescript": "^5.0.0"
