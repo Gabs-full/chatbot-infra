@@ -82,7 +82,7 @@ const dbPassword = config.requireSecret("dbPassword");
 
 const rds = new aws.rds.Instance(`${projectName}-postgres`, {
   engine: "postgres",
-  engineVersion: "15.4",
+  engineVersion: "15.10",
   instanceClass: "db.t3.micro",
   allocatedStorage: 20,
   maxAllocatedStorage: 100,
