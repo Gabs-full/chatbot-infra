@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/SEU_ORG/chatbot-infra
+    repoURL: https://github.com/Gabs-full/chatbot-infra
     targetRevision: HEAD
     path: manifests
   destination:
@@ -27,7 +27,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/SEU_ORG/chatbot-infra
+    repoURL: https://github.com/Gabs-full/chatbot-infra
     targetRevision: HEAD
     path: manifests
   destination:
@@ -48,7 +48,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/SEU_ORG/chatbot-infra
+    repoURL: https://github.com/Gabs-full/chatbot-infra
     targetRevision: HEAD
     path: manifests
   destination:
@@ -69,7 +69,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/SEU_ORG/chatbot-infra
+    repoURL: https://github.com/Gabs-full/chatbot-infra
     targetRevision: HEAD
     path: manifests
   destination:
@@ -90,7 +90,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/SEU_ORG/chatbot-infra
+    repoURL: https://github.com/Gabs-full/chatbot-infra
     targetRevision: HEAD
     path: manifests
   destination:
