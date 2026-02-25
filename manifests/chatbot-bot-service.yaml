@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: chatbot-bot-service
-          image: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/chatbot/chatbot-bot-service:latest
+          image: 167506318540.dkr.ecr.us-east-1.amazonaws.com/chatbot-bot-service:latest
           ports:
             - containerPort: 8000
           env:
@@ -53,6 +53,8 @@ spec:
               port: 8000
             initialDelaySeconds: 30
             periodSeconds: 10
+      imagePullSecrets:
+        - name: regcred
 ---
 apiVersion: v1
 kind: Service
