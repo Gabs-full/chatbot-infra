@@ -1,4 +1,4 @@
 config:
   aws:region: us-east-1
   chatbot-infra:dbPassword:
-    secure: AAABAM6yvC42q4rE6rwlqG3fPSk8t3Ka9tSJTnz5r4e+Rs0lFLqxhnze
+    secure: AAABACbFG3/IFG2wzpzbtXDLnVY3MN8DkjPKSIrBb+2Weihztsb6p1t+

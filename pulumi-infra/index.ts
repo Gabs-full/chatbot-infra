@@ -110,6 +110,7 @@ const cluster = new eks.Cluster(`${projectName}-eks`, {
   desiredCapacity: 2,
   minSize: 1,
   maxSize: 5,
+  version: "1.31",
   nodeAssociatePublicIpAddress: false,
   enabledClusterLogTypes: ["api", "audit", "authenticator"],
   tags: { Environment: env },
