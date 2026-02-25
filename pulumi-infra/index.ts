@@ -99,18 +99,8 @@ const rds = new aws.rds.Instance(`${projectName}-postgres`, {
 });
 
 // ─────────────────────────────────────────
-// EKS
+// EKS — IAM Role para os nodes
 // ─────────────────────────────────────────
-const cluster = new eks.Cluster(`${projectName}-eks`, {
-  vpcId: vpc.vpcId,
-  privateSubnetIds: vpc.privateSubnetIds,
-  publicSubnetIds: vpc.publicSubnetIds,
-  nodeAssociatePublicIpAddress: false,
-  enabledClusterLogTypes: ["api", "audit", "authenticator"],
-  skipDefaultNodeGroup: true,
-  tags: { Environment: env },
-});
-
 const nodeRole = new aws.iam.Role(`${projectName}-node-role`, {
   assumeRolePolicy: JSON.stringify({
     Version: "2012-10-17",
@@ -135,6 +125,20 @@ new aws.iam.RolePolicyAttachment(`${projectName}-node-cni-policy`, {
 new aws.iam.RolePolicyAttachment(`${projectName}-node-ecr-policy`, {
   role: nodeRole.name,
   policyArn: "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+});
+
+// ─────────────────────────────────────────
+// EKS — Cluster
+// ─────────────────────────────────────────
+const cluster = new eks.Cluster(`${projectName}-eks`, {
+  vpcId: vpc.vpcId,
+  privateSubnetIds: vpc.privateSubnetIds,
+  publicSubnetIds: vpc.publicSubnetIds,
+  nodeAssociatePublicIpAddress: false,
+  enabledClusterLogTypes: ["api", "audit", "authenticator"],
+  skipDefaultNodeGroup: true,
+  instanceRoles: [nodeRole],
+  tags: { Environment: env },
 });
 
 const nodeGroup = new eks.ManagedNodeGroup(`${projectName}-nodegroup`, {
